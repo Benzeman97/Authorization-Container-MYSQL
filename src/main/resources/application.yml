@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: 'authorization-server'
+  profiles:
+    active: dev,mysql
+server:
+  port: 9091

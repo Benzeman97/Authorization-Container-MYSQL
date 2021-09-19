@@ -1,0 +1,35 @@
+
+version: "3.8"
+
+services:
+  authorization-server:
+        image: authorization:1.x
+        ports: 
+           - 9091:9091
+        networks:
+           - identity-mysql
+        depends_on:
+           - mysqldb
+        restart: on-failure           
+        
+  mysqldb:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    networks:
+      - identity-mysql
+    volumes:
+      - 'mysqldata:/var/lib/mysql'
+      - './init_scripts:/docker-entrypoint-initdb.d'
+    environment:
+      - MYSQL_ROOT_PASSWORD=14292
+      - MYSQL_USER=root
+    restart: unless-stopped
+    
+
+networks:
+ identity-mysql:
+
+volumes:
+  mysqldata:
+
